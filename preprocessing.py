@@ -12,10 +12,10 @@ def filter_and_format_dates(df_22, df_24):
     """Filter and format date columns in both price datasets."""
     df_22['REF_DATE'] = pd.to_datetime(df_22['REF_DATE'])
     df_24['REF_DATE'] = pd.to_datetime(df_24['REF_DATE'])
-    df_22 = df_22[df_22['GEO'] == 'Canada']
-    df_24 = df_24[df_24['GEO'] == 'Canada']
-    df_22 = df_22[df_22['REF_DATE'].dt.year > 1999]
-    df_24 = df_24[(df_24['REF_DATE'].dt.year >= 2022) & (df_24['REF_DATE'].dt.month >= 3)]
+    # df_22 = df_22[df_22['GEO'] == 'Canada']
+    # df_24 = df_24[df_24['GEO'] == 'Canada']
+    df_22 = df_22[(df_22['REF_DATE'].dt.year > 1999) & (df_22['REF_DATE'].dt.year < 2017)]
+    df_24 = df_24[(df_24['REF_DATE'].dt.year >= 2017) & (df_24['REF_DATE'].dt.month >= 1)]
     return df_22, df_24
 
 def filter_items(df_22, df_24, items_22, items_24):
@@ -27,8 +27,8 @@ def filter_items(df_22, df_24, items_22, items_24):
 def clean_combined_data(df_22, df_24, items_22, items_24):
     """Combine datasets, drop unnecessary columns, and adjust item names."""
     combined_df = pd.concat([df_22, df_24], ignore_index=True)
-    combined_df.drop(['GEO', 'DGUID', 'UOM', 'UOM_ID', 'SCALAR_FACTOR', 'SCALAR_ID', 'VECTOR', 'COORDINATE', 'STATUS', 'SYMBOL', 'TERMINATED', 'DECIMALS'], axis=1, inplace=True)
-    combined_df.rename(columns={'REF_DATE': 'date', 'Products': 'item', 'VALUE': 'price'}, inplace=True)
+    combined_df.drop(['DGUID', 'UOM', 'UOM_ID', 'SCALAR_FACTOR', 'SCALAR_ID', 'VECTOR', 'COORDINATE', 'STATUS', 'SYMBOL', 'TERMINATED', 'DECIMALS'], axis=1, inplace=True)
+    combined_df.rename(columns={'REF_DATE': 'date', 'GEO':'province','Products': 'item', 'VALUE': 'price'}, inplace=True)
     combined_df.loc[combined_df['item'] == 'Carrots, 1 kilogram', 'price'] *= 1.36
     replacement_dict = dict(zip(items_22, items_24))
     combined_df['item'] = combined_df['item'].replace(replacement_dict)
@@ -45,8 +45,7 @@ def process_wage_data(wage_df):
     wage_df['Effective Date'] = pd.to_datetime(wage_df['Effective Date'], format="%d-%b-%y")
     wage_df['Minimum Wage'] = wage_df['Minimum Wage'].apply(remove_dollar_sign)
     wage_df['year'] = wage_df['Effective Date'].dt.year
-    avg_wage_df = wage_df.groupby('year')['Minimum Wage'].mean().reset_index()
-    return avg_wage_df
+    return wage_df
 
 def load_and_reformat_cpi(cpi_path):
     """Load the CPI data and reformat it to long format with each month as a row."""
@@ -63,22 +62,54 @@ def load_and_reformat_cpi(cpi_path):
     
     return cpi_df
 
-def create_cpi_wage_dataset(cpi_df, avg_wage_df):
+def create_cpi_wage_dataset(cpi_df, wage_df):
     """Combine CPI data with average wage data on year to create a standalone dataset."""
     cpi_df['year'] = cpi_df['date'].dt.year
-    cpi_wage_df = cpi_df.merge(avg_wage_df, on='year', how='left')
+    cpi_wage_df = cpi_df.merge(wage_df, on='year', how='left')
     cpi_wage_df.drop(columns=['year'], inplace=True)
     cpi_wage_df.rename(columns={'Products':'product','CPI':'cpi', 'Minimum Wage':'minimum_wage'}, inplace = True)
     return cpi_wage_df
 
 
-def merge_wages_with_prices(combined_df, avg_wage_df):
-    """Merge the average wage data with the price data on the year."""
+def merge_wages_with_prices(combined_df, wage_df):
+    """
+    Returns:
+    - pd.DataFrame: Combined DataFrame with wages merged into price data.
+    """
+    provinces = [
+        "Alberta",
+        "British Columbia",
+        "Manitoba",
+        "New Brunswick",
+        "Newfoundland and Labrador",
+        "Nova Scotia",
+        "Ontario",
+        "Prince Edward Island",
+        "Quebec",
+        "Saskatchewan"
+    ]
+    # Ensure the year column exists in both DataFrames
     combined_df['year'] = combined_df['date'].dt.year
-    combined_df = combined_df.merge(avg_wage_df, on='year', how='left')
+
+    # Calculate the mean wage for each year in wage_df
+    year_mean_wage = wage_df.groupby('year')['Minimum Wage'].mean().reset_index()
+    year_mean_wage.rename(columns={'Minimum Wage': 'mean_wage'}, inplace=True)
+
+    # Merge the province-specific data
+    combined_df = combined_df.merge(wage_df, on=['province', 'year'], how='left')
+
+    # Add the mean wage for 'Canada' provinces
+    combined_df = combined_df.merge(year_mean_wage, on='year', how='left')
+    combined_df['Minimum Wage'] = combined_df.apply(
+        lambda x: x['mean_wage'] if x['province'] not in provinces else x['Minimum Wage'], axis=1
+    )
+
+    # Cleanup unnecessary columns
     combined_df.rename(columns={'Minimum Wage': 'min_wage'}, inplace=True)
-    combined_df.drop(columns=['year'], inplace=True)
+    combined_df.drop(columns=['year', 'mean_wage'], inplace=True)
+
     return combined_df
+
 
 def save_cleaned_data(df, output_path):
     """Save the cleaned DataFrame to a CSV file."""
@@ -111,8 +142,8 @@ if __name__ == "__main__":
     df_22, df_24 = filter_items(df_22, df_24, items_22, items_24)
     combined_df = clean_combined_data(df_22, df_24, items_22, items_24)
 
-    avg_wage_df = process_wage_data(wage_df)
-    combined_df = merge_wages_with_prices(combined_df, avg_wage_df)
+    wage_df = process_wage_data(wage_df)
+    combined_df = merge_wages_with_prices(combined_df, wage_df)
     save_cleaned_data(combined_df, 'price_wage_data.csv')
 
     # Load and process CPI data
@@ -120,8 +151,8 @@ if __name__ == "__main__":
     
     
     # Process wage data and create a separate CPI-wage dataset
-    avg_wage_df = process_wage_data(wage_df)
-    cpi_wage_df = create_cpi_wage_dataset(cpi_df, avg_wage_df)
+    wage_df = process_wage_data(wage_df)
+    cpi_wage_df = create_cpi_wage_dataset(cpi_df, wage_df)
     inflation_df = load_inflation_data('raw_data/inflation.csv')
 
     cpi_wage_df = add_inflation_change(cpi_wage_df, inflation_df)
