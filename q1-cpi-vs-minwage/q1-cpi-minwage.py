@@ -6,8 +6,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 
-cpi_file_path = "./raw_data/cpi.csv"
-wages_file_path = "./raw_data/wages.csv"
+cpi_file_path = "../raw_data/cpi.csv"
+wages_file_path = "../raw_data/wages.csv"
 cpi_data = pd.read_csv(cpi_file_path)
 wages_data = pd.read_csv(wages_file_path)
 
@@ -41,6 +41,8 @@ merged_data_all_months = pd.merge(
     average_wages_all_months, average_cpi_food_by_year, on="Year", how="inner"
 )
 merged_data_all_months.columns = ["Year", "Average Minimum Wage", "Average CPI Food"]
+output_csv_path = "./merged_minimum_wage_cpi_data.csv"
+merged_data_all_months.to_csv(output_csv_path, index=False)
 
 # Linear Regression
 X = merged_data_all_months["Average Minimum Wage"].values.reshape(-1, 1)
