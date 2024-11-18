@@ -26,17 +26,19 @@ wages_data_cleaned = wages_data_cleaned[wages_data_cleaned["Year"] >= 2000]
 average_wages_all_months = wages_data_cleaned.groupby("Year")["Minimum Wage"].mean()
 
 # process CPI data
-cpi_food = cpi_data[cpi_data["Products"] == "Food 5"]
-cpi_food_december = cpi_food.filter(like="December").iloc[0, 1:].reset_index()
-cpi_food_december.columns = ["Year", "CPI Food"]
-cpi_food_december["Year"] = (
-    cpi_food_december["Year"].str.extract(r"(\d{4})").astype(int)
+cpi_food_long = cpi_data[cpi_data["Products"] == "Food 5"].melt(
+    id_vars=["Products"], var_name="Month-Year", value_name="CPI Food"
 )
-cpi_food_december = cpi_food_december[cpi_food_december["Year"] >= 2000]
+cpi_food_long["Year"] = cpi_food_long["Month-Year"].str.extract(r"(\d{4})").astype(int)
+cpi_food_long["Month"] = cpi_food_long["Month-Year"].str.extract(r"([a-zA-Z]+)")
+cpi_food_long_filtered = cpi_food_long[cpi_food_long["Year"] >= 2000]
+average_cpi_food_by_year = (
+    cpi_food_long_filtered.groupby("Year")["CPI Food"].mean().reset_index()
+)
 
 # merge average wages and CPI data
 merged_data_all_months = pd.merge(
-    average_wages_all_months, cpi_food_december, on="Year", how="inner"
+    average_wages_all_months, average_cpi_food_by_year, on="Year", how="inner"
 )
 merged_data_all_months.columns = ["Year", "Average Minimum Wage", "Average CPI Food"]
 
