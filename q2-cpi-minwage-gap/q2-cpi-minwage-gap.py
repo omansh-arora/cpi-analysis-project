@@ -19,6 +19,7 @@ wages_data["Minimum Wage"] = (
 )
 
 # wages data from 2000 onwards and calculate average minimum wage for each year
+# this is done because our dataset only has minimum wage data for years 2000+
 wages_data_cleaned = wages_data.dropna(subset=["Effective Date"])
 wages_data_cleaned = wages_data_cleaned[wages_data_cleaned["Year"] >= 2000]
 average_wages_all_months = wages_data_cleaned.groupby("Year")["Minimum Wage"].mean()
@@ -67,15 +68,18 @@ tukey = pairwise_tukeyhsd(
     alpha=0.05                        
 )
 
-# Tukey's HSD results
+# Tukey's results
 print("\nTukey's HSD Test Results:")
 print(tukey)
 
-# Plot
+tukey_df = pd.DataFrame(data=tukey.summary().data[1:], columns=tukey.summary().data[0])
+tukey_df.to_csv("tukey_hsd_results.csv", index=False)
+
 plt.figure(figsize=(12, 8))
 tukey.plot_simultaneous()
 plt.title("Tukey's HSD Test Results")
 plt.xlabel("CPI-Wage Gap")
+plt.savefig("Tukey-HSD-Plot.png", dpi=600)
 plt.show()
 
 output_csv_path = "./cpi_wage_gap_analysis.csv"
