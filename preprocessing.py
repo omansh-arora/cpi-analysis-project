@@ -41,10 +41,18 @@ def remove_dollar_sign(st):
 
 def process_wage_data(wage_df):
     """Process wage data to calculate average annual minimum wage."""
-
     wage_df['Effective Date'] = pd.to_datetime(wage_df['Effective Date'], format="%d-%b-%y")
     wage_df['Minimum Wage'] = wage_df['Minimum Wage'].apply(remove_dollar_sign)
     wage_df['year'] = wage_df['Effective Date'].dt.year
+
+    # Group by province and year to average wages and keep the first effective date
+    wage_df = wage_df.sort_values(['province', 'year', 'Effective Date'])
+    wage_df = wage_df.groupby(['province', 'year']).agg(
+        {
+            'Effective Date': 'first',  # Keep the first effective date
+            'Minimum Wage': 'mean'     # Calculate the average wage for the year
+        }
+    ).reset_index()
     return wage_df
 
 def load_and_reformat_cpi(cpi_path):
@@ -98,15 +106,20 @@ def merge_wages_with_prices(combined_df, wage_df):
     # Merge the province-specific data
     combined_df = combined_df.merge(wage_df, on=['province', 'year'], how='left')
 
-    # Add the mean wage for 'Canada' provinces
+    # Ensure year_mean_wage has one row per year
+    year_mean_wage = year_mean_wage.groupby('year', as_index=False)['mean_wage'].mean()
+
+    # Merge the mean wage with the combined dataset
     combined_df = combined_df.merge(year_mean_wage, on='year', how='left')
-    combined_df['Minimum Wage'] = combined_df.apply(
+
+    # Update the Minimum Wage column conditionally based on province
+    combined_df['min_wage'] = combined_df.apply(
         lambda x: x['mean_wage'] if x['province'] not in provinces else x['Minimum Wage'], axis=1
     )
 
-    # Cleanup unnecessary columns
-    combined_df.rename(columns={'Minimum Wage': 'min_wage'}, inplace=True)
-    combined_df.drop(columns=['year', 'mean_wage'], inplace=True)
+    # Drop unnecessary columns
+    combined_df.drop(columns=['year', 'mean_wage', 'Minimum Wage'], inplace=True)
+
 
     return combined_df
 
