@@ -1,0 +1,67 @@
+group1,group2,meandiff,p-adj,lower,upper,reject
+"Alcoholic beverages, tobacco products and recreational cannabis",Clothing and footwear,-46.0178,0.0,-65.2153,-26.8203,True
+"Alcoholic beverages, tobacco products and recreational cannabis",Energy 7,6.3331,0.995,-12.8644,25.5306,False
+"Alcoholic beverages, tobacco products and recreational cannabis",Food 5,-9.7604,0.878,-28.9579,9.437,False
+"Alcoholic beverages, tobacco products and recreational cannabis",Gasoline,17.8991,0.0941,-1.2984,37.0966,False
+"Alcoholic beverages, tobacco products and recreational cannabis",Goods 8,-26.0337,0.0007,-45.2312,-6.8362,True
+"Alcoholic beverages, tobacco products and recreational cannabis",Health and personal care,-23.5511,0.0039,-42.7486,-4.3536,True
+"Alcoholic beverages, tobacco products and recreational cannabis","Household operations, furnishings and equipment",-27.949,0.0002,-47.1465,-8.7515,True
+"Alcoholic beverages, tobacco products and recreational cannabis","Recreation, education and reading",-32.7808,0.0,-51.9783,-13.5833,True
+"Alcoholic beverages, tobacco products and recreational cannabis",Services 9,-11.3663,0.7258,-30.5638,7.8312,False
+"Alcoholic beverages, tobacco products and recreational cannabis",Shelter 6,-11.9339,0.6597,-31.1314,7.2636,False
+"Alcoholic beverages, tobacco products and recreational cannabis",Transportation,-13.8896,0.4203,-33.087,5.3079,False
+Clothing and footwear,Energy 7,52.3509,0.0,33.1534,71.5484,True
+Clothing and footwear,Food 5,36.2573,0.0,17.0598,55.4548,True
+Clothing and footwear,Gasoline,63.9169,0.0,44.7194,83.1144,True
+Clothing and footwear,Goods 8,19.9841,0.033,0.7866,39.1816,True
+Clothing and footwear,Health and personal care,22.4667,0.0077,3.2692,41.6642,True
+Clothing and footwear,"Household operations, furnishings and equipment",18.0688,0.087,-1.1287,37.2663,False
+Clothing and footwear,"Recreation, education and reading",13.237,0.4989,-5.9605,32.4345,False
+Clothing and footwear,Services 9,34.6514,0.0,15.454,53.8489,True
+Clothing and footwear,Shelter 6,34.0839,0.0,14.8864,53.2814,True
+Clothing and footwear,Transportation,32.1282,0.0,12.9307,51.3257,True
+Energy 7,Food 5,-16.0936,0.2021,-35.291,3.1039,False
+Energy 7,Gasoline,11.566,0.7031,-7.6315,30.7635,False
+Energy 7,Goods 8,-32.3668,0.0,-51.5643,-13.1693,True
+Energy 7,Health and personal care,-29.8842,0.0,-49.0817,-10.6867,True
+Energy 7,"Household operations, furnishings and equipment",-34.2821,0.0,-53.4796,-15.0846,True
+Energy 7,"Recreation, education and reading",-39.1139,0.0,-58.3114,-19.9164,True
+Energy 7,Services 9,-17.6994,0.1031,-36.8969,1.498,False
+Energy 7,Shelter 6,-18.267,0.0792,-37.4645,0.9305,False
+Energy 7,Transportation,-20.2227,0.029,-39.4202,-1.0252,True
+Food 5,Gasoline,27.6596,0.0002,8.4621,46.857,True
+Food 5,Goods 8,-16.2732,0.1885,-35.4707,2.9243,False
+Food 5,Health and personal care,-13.7907,0.4319,-32.9882,5.4068,False
+Food 5,"Household operations, furnishings and equipment",-18.1886,0.0822,-37.386,1.0089,False
+Food 5,"Recreation, education and reading",-23.0203,0.0054,-42.2178,-3.8228,True
+Food 5,Services 9,-1.6059,1.0,-20.8034,17.5916,False
+Food 5,Shelter 6,-2.1734,1.0,-21.3709,17.024,False
+Food 5,Transportation,-4.1291,0.9999,-23.3266,15.0684,False
+Gasoline,Goods 8,-43.9328,0.0,-63.1303,-24.7353,True
+Gasoline,Health and personal care,-41.4502,0.0,-60.6477,-22.2527,True
+Gasoline,"Household operations, furnishings and equipment",-45.8481,0.0,-65.0456,-26.6506,True
+Gasoline,"Recreation, education and reading",-50.6799,0.0,-69.8774,-31.4824,True
+Gasoline,Services 9,-29.2654,0.0001,-48.4629,-10.068,True
+Gasoline,Shelter 6,-29.833,0.0,-49.0305,-10.6355,True
+Gasoline,Transportation,-31.7887,0.0,-50.9862,-12.5912,True
+Goods 8,Health and personal care,2.4826,1.0,-16.7149,21.68,False
+Goods 8,"Household operations, furnishings and equipment",-1.9153,1.0,-21.1128,17.2822,False
+Goods 8,"Recreation, education and reading",-6.7471,0.9915,-25.9446,12.4504,False
+Goods 8,Services 9,14.6673,0.3333,-4.5302,33.8648,False
+Goods 8,Shelter 6,14.0998,0.3959,-5.0977,33.2973,False
+Goods 8,Transportation,12.1441,0.6343,-7.0534,31.3416,False
+Health and personal care,"Household operations, furnishings and equipment",-4.3979,0.9998,-23.5954,14.7996,False
+Health and personal care,"Recreation, education and reading",-9.2297,0.9136,-28.4272,9.9678,False
+Health and personal care,Services 9,12.1848,0.6293,-7.0127,31.3823,False
+Health and personal care,Shelter 6,11.6172,0.6972,-7.5803,30.8147,False
+Health and personal care,Transportation,9.6616,0.8852,-9.5359,28.859,False
+"Household operations, furnishings and equipment","Recreation, education and reading",-4.8318,0.9996,-24.0293,14.3657,False
+"Household operations, furnishings and equipment",Services 9,16.5827,0.1666,-2.6148,35.7802,False
+"Household operations, furnishings and equipment",Shelter 6,16.0151,0.2082,-3.1824,35.2126,False
+"Household operations, furnishings and equipment",Transportation,14.0594,0.4005,-5.138,33.2569,False
+"Recreation, education and reading",Services 9,21.4144,0.0147,2.217,40.6119,True
+"Recreation, education and reading",Shelter 6,20.8469,0.0204,1.6494,40.0444,True
+"Recreation, education and reading",Transportation,18.8912,0.0584,-0.3063,38.0887,False
+Services 9,Shelter 6,-0.5676,1.0,-19.765,18.6299,False
+Services 9,Transportation,-2.5232,1.0,-21.7207,16.6743,False
+Shelter 6,Transportation,-1.9557,1.0,-21.1532,17.2418,False
