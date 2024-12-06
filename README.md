@@ -4,10 +4,10 @@
 Relationship between minimum wage trends and the cost of food in Canada
 
 ## Table of Contents
-*[Libraries](#libraries)
+- [Libraries](#libraries)
 
-*[Installation](#installation)
+- [Installation](#installation)
 
-*[Usage](#usage)
+- [Usage](#usage)
 
 
