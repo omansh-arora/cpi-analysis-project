@@ -113,7 +113,7 @@ if __name__ == "__main__":
 
     avg_wage_df = process_wage_data(wage_df)
     combined_df = merge_wages_with_prices(combined_df, avg_wage_df)
-    save_cleaned_data(combined_df, 'price_wage_data.csv')
+    save_cleaned_data(combined_df, 'price_wage_data_country.csv')
 
     # Load and process CPI data
     cpi_df = load_and_reformat_cpi('raw_data/cpi.csv')
@@ -125,4 +125,4 @@ if __name__ == "__main__":
     inflation_df = load_inflation_data('raw_data/inflation.csv')
 
     cpi_wage_df = add_inflation_change(cpi_wage_df, inflation_df)
-    save_cleaned_data(cpi_wage_df, 'cpi_wage_data_with_inflation.csv')
+    save_cleaned_data(cpi_wage_df, 'cpi_wage_data_with_inflation_country.csv')
