@@ -4,7 +4,10 @@ import os
 files = [
     'preprocessing_country_data.py',
     'preprocessing_province_data.py',
+    'q1-cpi-vs-minwage/q1-cpi-minwage.py',
+    'q2-cpi-minwage-gap/q2-cpi-minwage-gap.py',
     'q3-min-wage-inflation-change/min_wage_inflation_correlation.py',
+    'q4-inflation-adjusted/q4-inflation-adjusted-comparison.py',
     'q5-basket-cost-inflation-change/basket_cost_inflation_correlation.py',
     'q6-num-min-wage-hours-basket-cost/num_hours_worked_for_basket.py',
     'q7-basket-province-prediction/basket_province_prediction.py'
