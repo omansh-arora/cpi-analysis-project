@@ -25,6 +25,15 @@ A list of the libraries that were used for this project includes:
 
 ## Installation
 
+### 1. Clone the repository
+
+git clone
+
+### 2. Install require libraries
+
+pip install numpy pandas matplotlib scikit-learn scipy statsmodels
+
+
 
 ## Usage
 
