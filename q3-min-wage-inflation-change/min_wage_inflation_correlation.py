@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy import stats
-import os
 
 filename1 = '../cpi_wage_data_with_inflation_country.csv'
 
