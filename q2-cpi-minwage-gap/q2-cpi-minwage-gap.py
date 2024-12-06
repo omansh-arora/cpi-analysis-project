@@ -69,8 +69,8 @@ tukey = pairwise_tukeyhsd(
 )
 
 # Tukey's results
-print("\nTukey's HSD Test Results:")
-print(tukey)
+# print("\nTukey's HSD Test Results:")
+# print(tukey)
 
 tukey_df = pd.DataFrame(data=tukey.summary().data[1:], columns=tukey.summary().data[0])
 tukey_df.to_csv("tukey_hsd_results.csv", index=False)
@@ -80,7 +80,8 @@ tukey.plot_simultaneous()
 plt.title("Tukey's HSD Test Results")
 plt.xlabel("CPI-Wage Gap")
 plt.savefig("Tukey-HSD-Plot.png", dpi=600)
-plt.show()
+# plt.show()
+plt.savefig('../plots/tukey.png', dpi=300, bbox_inches='tight')
 
 output_csv_path = "./cpi_wage_gap_analysis.csv"
 merged_data.to_csv(output_csv_path, index=False)
