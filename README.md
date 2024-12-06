@@ -23,6 +23,8 @@ A list of the libraries that were used for this project includes:
 - scipy 
 - statsmodels
 
+Note: Python3 is used for this
+
 ## Installation
 
 ### 1. Clone the repository
@@ -33,7 +35,20 @@ git clone
 
 pip install numpy pandas matplotlib scikit-learn scipy statsmodels
 
-
-
 ## Usage
+
+### Running the code
+
+#### 1. Navigate to project directory
+
+cd cpi-analysis-project
+
+#### 2. Execute Python script
+
+python3 main.py
+
+### Order of Execution
+
+### Files produced
+
 
