@@ -1,8 +1,29 @@
 # CMPT 353: Final Project
 
 ## Description
-Relationship between minimum wage trends and the cost of food in Canada
+This project analyzes the relationship between inflation-adjusted minimum wages and grocery prices in Canada over the years 2000 to 2024. Using data from various sources, it computes real (inflation-adjusted) values for wages and grocery prices and explores their correlation through statistical modeling and linear regression.
 
+## Features
+- **Data Preprocessing**:
+  - Cleans and processes historical wage, inflation, and grocery price data.
+  - Handles datasets spanning different time periods (2000-2017 and 2017-2024).
+- **Inflation Adjustment**:
+  - Computes inflation-adjusted wages and grocery prices to account for changing purchasing power.
+- **Data Merging**:
+  - Integrates data from multiple sources into a unified dataset for comprehensive analysis.
+- **Statistical Analysis**:
+  - Performs linear regression to examine the relationship between real minimum wages and real grocery prices.
+  - Outputs key regression metrics and visualizations.
+- **Visualization**:
+  - Generates scatterplots with regression lines to illustrate trends and relationships.
+- **Output**:
+  - Saves processed datasets and analysis results in CSV format for reproducibility.
+
+## Technologies Used
+- Python
+- Pandas for data manipulation
+- Matplotlib for visualization
+- Scikit-learn for linear regression modeling
 ## Table of Contents
 - [Libraries](#libraries)
 
